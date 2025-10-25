@@ -16,10 +16,12 @@
       </a-assets>
       <a-sky startplay src="#surfer" rotation="0 180 0"></a-sky>
       <a-entity
+        id="Fisch"
         obj-model="obj: #FischObj; mtl: #FischMtl" 
         position="0 1 -3"
         scale="0.1 0.1 0.1"
-        rotation="0 0 90">
+        rotation="0 0 90"
+        animation="property: rotation; to: 360 0 90; loop: true; dur: 4000; easing: linear">
       </a-entity>
     <a-entity position="0 0 3.8">
       <a-camera></a-camera>
