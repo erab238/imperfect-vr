@@ -10,22 +10,48 @@
   <!-- add VR here -->
    <a-scene> 
      <a-assets timeout="10000">
-        <a-asset-item id="FischObj" src="fisch/12265_Fish_v1_L2.obj"></a-asset-item>
-        <a-asset-item id="FischMtl" src="fisch/12265_Fish_v1_L2.mtl"></a-asset-item>     
-        <video id="surfer" src="surfer_cut_final.mp4" loop="true"></video>
-      </a-assets>
+        <a-asset-item id="FischObj" src="assets/fisch/12265_Fish_v1_L2.obj"></a-asset-item>
+        <a-asset-item id="FischMtl" src="assets/fisch/12265_Fish_v1_L2.mtl"></a-asset-item>     
+        <video id="surfer" src="assets/surfer_cut_final.mp4" loop="true"></video>
+        <audio id="text_charli" src="assets/text_charli.mp3" preload="auto"></audio>
+        <a-asset-item id="FliegeObj" src="assets/fliege/fliege.obj"></a-asset-item>
+        <a-asset-item id="FliegeMtl" src="assets/fliege/fliege.mtl"></a-asset-item>
+        </a-assets>
       <a-sky startplay src="#surfer" rotation="0 180 0"></a-sky>
       <a-entity
         id="Fisch"
         obj-model="obj: #FischObj; mtl: #FischMtl" 
         position="0 1 -3"
-        scale="0.1 0.1 0.1"
+        scale="0.5 0.5 0.5"
         rotation="0 0 90"
         animation="property: rotation; to: 360 0 90; loop: true; dur: 4000; easing: linear">
       </a-entity>
+      <a-entity
+        id="Fliege"
+        obj-model="obj: #FliegeObj; mtl: #FliegeMtl" 
+        position="1 -1 22"
+        scale="0.5 0.5 0.5"
+        rotation="0 0 0">
+      </a-entity>
+      <!-- sound entity that uses the audio asset -->
+      <a-entity id="charliSound" sound="src: #text_charli; autoplay: false;"></a-entity>
     <a-entity position="0 0 3.8">
       <a-camera></a-camera>
     </a-entity>
    </a-scene> 
+  <script>
+    const scene = document.querySelector('a-scene');
+    scene.addEventListener('loaded', () => {
+      const audio = document.getElementById('text_charli');
+      // try to play immediately; if blocked, wait for a user gesture
+      audio.play().catch(() => {
+        const resume = () => {
+          audio.play().catch(()=>{}); // ignore further errors
+          document.body.removeEventListener('click', resume);
+        };
+        document.body.addEventListener('click', resume, { once: true });
+      });
+    });
+  </script>
   </body>
 </html>
